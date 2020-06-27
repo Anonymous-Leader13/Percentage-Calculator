@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator</title>
+</head>
+
+<body>
+    <input type="Number" class="number">
+    <button onclick="start()"> start </button>
+    <div class="marks"></div>
+    <button onclick = "calculate()"> Calculate Percentage </button>
+    <style>*{text-align: center;}</style>
+    <script>
+        let num;
+        const marks = []
+        const credits = []
+
+        function start() {
+            document.querySelector(".marks").innerHTML = "";
+            num = document.querySelector(".number").value
+
+            for (let i = 0; i < num; i++) {
+                document.querySelector(".marks").innerHTML += `<div> <input placeholder = "MARKS" id = marks${i} type="Number"> <input placeholder = "CREDITS" id = credits${i} type="Number"> </div>`
+            }
+
+        }
+
+        function calculate(){
+            takeInput();
+            const w = with_credits();
+            const wo = without_credits();
+
+            document.querySelector(".marks").innerHTML += `<p> With Credits : ${w} </p>`
+            document.querySelector(".marks").innerHTML += `Without Credits : ${wo} `
+        }
+
+
+
+
+        function takeInput() {
+            for (let i = 0; i < num; i++) {
+                marks.push(Number(document.querySelector(`#marks${i}`).value));
+                credits.push(Number(document.querySelector(`#credits${i}`).value) || 1);
+            }
+            console.log(marks)
+            console.log(credits)
+        }
+
+        function without_credits() {
+            const num_subjects = marks.length;
+            let sum = 0;
+            marks.forEach(m => sum += m)
+            return (sum / num_subjects);
+        }
+
+        function with_credits() {
+            const num_subjects = marks.length;
+            let sum_credits = 0, sum_marks = 0;
+            for (let i = 0; i < num_subjects; i++) {
+                const mark = marks[i];
+                const cred = credits[i];
+                sum_marks += (mark * cred);
+                sum_credits += cred;
+            }
+            return sum_marks / sum_credits;
+        }
+
+
+
+    </script>
+</body>
+
+</html>
